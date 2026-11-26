@@ -1,0 +1,9 @@
+dist/
+*.exe
+prueba.txt
+*.part
+# Claves privadas de firma: nunca se suben
+*.pfx
+*.p12
+*.pvk
+*.key
