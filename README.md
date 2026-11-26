@@ -6,6 +6,7 @@ Battery Level es una app chiquita para Windows 10 y 11. Muestra en la barra de t
 
 - **Dispositivos Razer** (mouse, auriculares, teclados inalámbricos): con Razer Synapse abierto, el dato sale de lo que Synapse va anotando. Sin Synapse, se lo pide directo al dongle o al cable (por ahora solo el Basilisk V3 Pro 35K).
 - **Cualquier dispositivo Bluetooth conectado que informe su batería a Windows**: auriculares, parlantes, joysticks, mouse, teclados.
+- **Joysticks Xbox y compatibles por el adaptador de Xbox o por USB**: Windows da solo 4 niveles (vacía, baja, media, llena), así que el % es aproximado. Por Bluetooth, el joystick de Xbox da el % exacto.
 
 Cuando conectás un dispositivo con batería, aparece solo a los pocos segundos.
 

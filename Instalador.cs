@@ -21,7 +21,7 @@ namespace BatteryLevelSetup
 {
     static class Instalacion
     {
-        public const string Version = "1.2.0";
+        public const string Version = "1.3.0";
         public const string ClaveRun = @"Software\Microsoft\Windows\CurrentVersion\Run";
         public const string ClaveDesinstalar = @"Software\Microsoft\Windows\CurrentVersion\Uninstall\BatteryLevel";
         public const string Repo = "https://github.com/ctrolsave/Battery-level";

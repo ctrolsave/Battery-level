@@ -20,8 +20,8 @@ using Microsoft.Win32.SafeHandles;
 [assembly: AssemblyProduct("Battery Level")]
 [assembly: AssemblyCompany("Ctrl + Save Design Studio")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Ctrl + Save Design Studio. Todos los derechos reservados.")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]
 
 namespace BateriaTray
 {
@@ -39,6 +39,41 @@ namespace BateriaTray
         public static string ClaveRazer(string nombre)
         {
             return "razer-" + Regex.Replace(nombre.ToLowerInvariant(), "[^a-z0-9]+", "-").Trim('-');
+        }
+    }
+
+    // ------------------------------------------------------------------ Joysticks (XInput)
+    // Joysticks Xbox y compatibles conectados por el adaptador inalámbrico de Xbox o por USB.
+    // Windows solo da 4 niveles (vacío, bajo, medio, lleno), así que el % es aproximado.
+    static class XInput
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        struct XINPUT_BATTERY_INFORMATION { public byte BatteryType, BatteryLevel; }
+
+        [DllImport("xinput1_4.dll")]
+        static extern int XInputGetBatteryInformation(int usuario, byte tipo, out XINPUT_BATTERY_INFORMATION info);
+
+        public static List<Lectura> Leer()
+        {
+            var lista = new List<Lectura>();
+            for (int i = 0; i < 4; i++)
+            {
+                XINPUT_BATTERY_INFORMATION b;
+                if (XInputGetBatteryInformation(i, 0, out b) != 0) continue;
+                // 0 desconectado, 1 con cable (sin batería), 0xFF desconocido.
+                if (b.BatteryType == 0 || b.BatteryType == 1 || b.BatteryType == 0xFF) continue;
+                int[] pct = { 5, 30, 65, 100 };
+                string[] nivel = { "casi vacía", "baja", "media", "llena" };
+                int n = Math.Min((int)b.BatteryLevel, 3);
+                var l = new Lectura();
+                l.Clave = "xinput-" + i;
+                l.Nombre = "Joystick Xbox " + (i + 1);
+                l.Porcentaje = pct[n];
+                l.Tipo = Tipo.Bluetooth;
+                l.Detalle = "Batería " + nivel[n] + " (aprox.: Windows da solo 4 niveles para joysticks por adaptador o USB)";
+                lista.Add(l);
+            }
+            return lista;
         }
     }
 
@@ -1129,6 +1164,16 @@ namespace BateriaTray
             // Si el mouse Razer ya respondió por el dongle o Synapse, no repetirlo por Bluetooth.
             if (lecturas.Exists(l => l.Clave.StartsWith("razer-")))
                 lecturas.RemoveAll(l => l.Clave.StartsWith("bt-") && l.Tipo == Tipo.Mouse);
+            // Joysticks por XInput. Un joystick Xbox por Bluetooth también aparece en XInput,
+            // pero el Bluetooth da el % exacto: se saltean tantos como ya se leyeron por Bluetooth.
+            try
+            {
+                var xi = XInput.Leer();
+                int yaPorBt = lecturas.FindAll(l => l.Clave.StartsWith("bt-") &&
+                    Regex.IsMatch(l.Nombre, @"xbox|controller|gamepad", RegexOptions.IgnoreCase)).Count;
+                for (int i = yaPorBt; i < xi.Count; i++) lecturas.Add(xi[i]);
+            }
+            catch { }
             return lecturas;
         }
 
