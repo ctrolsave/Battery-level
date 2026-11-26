@@ -26,7 +26,16 @@ Cada dispositivo muestra su logo (el de Razer, auriculares, parlante o joystick)
 1. Bajá `BatteryLevel-Setup.exe` de la sección [Releases](../../releases).
 2. Abrilo y tocá **Instalar**. Se instala solo para tu usuario y no pide permisos de administrador.
 
-Como el certificado de la firma es propio y no de una autoridad comercial, Windows SmartScreen puede avisar "Windows protegió tu PC". Para seguir, tocá **Más información** y después **Ejecutar de todas formas**.
+> [!WARNING]
+> **Es normal que Windows avise "Windows protegió tu PC" (SmartScreen).**
+> Pasa con casi todos los programas nuevos de estudios chicos. Windows muestra ese aviso hasta que muchas personas bajan el programa, o cuando su firma no la emitió una autoridad comercial paga, como en este caso: el certificado es propio de Ctrl + Save Design Studio. No quiere decir que tenga un virus.
+>
+> Para seguir, tocá **Más información** y después **Ejecutar de todas formas**. Ahí va a decir "Editor desconocido": es esperable con un certificado propio.
+>
+> **Cómo saber que es la copia original:**
+> - Bajalo solo desde [Releases](../../releases) de este repositorio.
+> - Clic derecho en el archivo > *Propiedades* > *Firmas digitales*: tiene que decir **Ctrl + Save Design Studio**.
+> - El programa revisa su propia firma al abrirse. Si alguien lo modificó, muestra un aviso rojo y no se abre.
 
 Para desinstalar: *Configuración > Aplicaciones > Aplicaciones instaladas > Battery Level > Desinstalar*.
 
