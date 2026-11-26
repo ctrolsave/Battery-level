@@ -26,7 +26,7 @@ Cada dispositivo muestra su logo (el de Razer, auriculares, parlante o joystick)
 1. Bajá `BatteryLevel-Setup.exe` de la sección [Releases](../../releases).
 2. Abrilo y tocá **Instalar**. Se instala solo para tu usuario y no pide permisos de administrador.
 
-Como el instalador no está firmado digitalmente, Windows SmartScreen puede avisar "Windows protegió tu PC". Para seguir, tocá **Más información** y después **Ejecutar de todas formas**.
+Como el certificado de la firma es propio y no de una autoridad comercial, Windows SmartScreen puede avisar "Windows protegió tu PC". Para seguir, tocá **Más información** y después **Ejecutar de todas formas**.
 
 Para desinstalar: *Configuración > Aplicaciones > Aplicaciones instaladas > Battery Level > Desinstalar*.
 
@@ -53,6 +53,15 @@ powershell -ExecutionPolicy Bypass -File .\build.ps1
 Usa el `csc` de .NET Framework 4 que ya trae Windows, así que no hace falta instalar nada. El resultado queda en `dist\`: `BatteryLevel.exe`, `BatteryLevel-Setup.exe` (que lleva la app adentro) y `SHA256SUMS.txt`. Para firmar hace falta el certificado de Ctrl + Save Design Studio con su clave privada, que está solo en la PC del estudio. Sin él, la compilación se corta.
 
 `BatteryLevel.exe --prueba` escribe lo que lee en `prueba.txt`.
+
+## ¿Te sirvió? Invitame un café
+
+Battery Level es gratis. Si te gustó y querés apoyar a Ctrl + Save Design Studio para que siga haciendo programas así:
+
+- Desde Argentina, en pesos con Mercado Pago: [cafecito.app/controlsave](https://cafecito.app/controlsave)
+- Desde cualquier país, en dólares con PayPal: [ko-fi.com/controlsave](https://ko-fi.com/controlsave)
+
+También está en la app: clic derecho > *Donar a Ctrl + Save Design Studio*.
 
 ## Aviso
 

@@ -20,8 +20,8 @@ using Microsoft.Win32.SafeHandles;
 [assembly: AssemblyProduct("Battery Level")]
 [assembly: AssemblyCompany("Ctrl + Save Design Studio")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Ctrl + Save Design Studio. Todos los derechos reservados.")]
-[assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyFileVersion("1.3.0.0")]
+[assembly: AssemblyVersion("1.3.1.0")]
+[assembly: AssemblyFileVersion("1.3.1.0")]
 
 namespace BateriaTray
 {
@@ -1122,6 +1122,10 @@ namespace BateriaTray
             var firma = new ToolStripMenuItem("Proyecto elaborado por Ctrl + Save Design Studio");
             firma.Enabled = false;
             menu.Items.Add(firma);
+            var donar = new ToolStripMenuItem("Donar a Ctrl + Save Design Studio ♥");
+            donar.DropDownItems.Add("Cafecito (pesos, Mercado Pago)", null, delegate { AbrirWeb("https://cafecito.app/controlsave"); });
+            donar.DropDownItems.Add("Ko-fi (dólares, PayPal)", null, delegate { AbrirWeb("https://ko-fi.com/controlsave"); });
+            menu.Items.Add(donar);
             menu.Items.Add("Salir", null, delegate { Salir(); });
         }
 
@@ -1175,6 +1179,12 @@ namespace BateriaTray
             }
             catch { }
             return lecturas;
+        }
+
+        // Abre solo los links fijos de donación del estudio en el navegador.
+        static void AbrirWeb(string url)
+        {
+            try { System.Diagnostics.Process.Start(url); } catch { }
         }
 
         void Actualizar()
